@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f5fb" id="theme-color">
+    <title>Daylight — your holiday planner</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Daylight home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d="M5 23.5 13.2 10l4.4 7.1 3.2-4.8L27 23.5H5Z" fill="currentColor"/>
+            <circle cx="23" cy="8" r="3" fill="#E8A454"/>
+          </svg>
+        </span>
+        <span>daylight</span>
+      </a>
+      <span class="topbar-note">A LITTLE MORE TIME FOR YOU</span>
+      <div class="topbar-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">
+          <svg class="moon-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M16.4 12.8A7 7 0 0 1 7.2 3.6a7 7 0 1 0 9.2 9.2Z"/></svg>
+          <svg class="sun-toggle-icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3.2"/><path d="M10 1.8v2m0 12.4v2m8.2-8.2h-2M3.8 10h-2m14-5.8-1.4 1.4M5.6 14.4l-1.4 1.4m11.6 0-1.4-1.4M5.6 5.6 4.2 4.2"/></svg>
+          <span id="theme-toggle-label">Dark mode</span>
+        </button>
+        <a class="topbar-link" href="#add-event">Plan a day off <span aria-hidden="true">↗</span></a>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-dot"></span> YOUR PERSONAL TIME-OFF PLANNER</p>
+          <h1 id="page-title">Make room for <em>away.</em></h1>
+          <p class="intro-copy">A little space to look forward to the good days.</p>
+        </div>
+        <div class="intro-note" aria-hidden="true">
+          <span class="sun-icon">☼</span>
+          <span>Good things<br>are on the horizon</span>
+        </div>
+      </section>
+
+      <section class="calendar-card" aria-label="Holiday calendar">
+        <div class="calendar-header">
+          <div class="month-heading">
+            <p class="section-kicker">YOUR CALENDAR</p>
+            <h2 id="month-label" aria-live="polite"></h2>
+            <p class="month-summary" id="month-summary"></p>
+          </div>
+          <div class="calendar-controls" aria-label="Calendar navigation">
+            <button class="today-button" id="today-button" type="button">Today</button>
+            <button class="arrow-button" id="previous-month" type="button" aria-label="Previous month">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 4-6 6 6 6"/></svg>
+            </button>
+            <button class="arrow-button" id="next-month" type="button" aria-label="Next month">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m8 4 6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="calendar-grid" id="calendar-grid" role="grid" aria-labelledby="month-label">
+          <div class="weekday-row" role="row">
+            <div class="weekday" role="columnheader">Mon</div>
+            <div class="weekday" role="columnheader">Tue</div>
+            <div class="weekday" role="columnheader">Wed</div>
+            <div class="weekday" role="columnheader">Thu</div>
+            <div class="weekday" role="columnheader">Fri</div>
+            <div class="weekday weekend-heading" role="columnheader">Sat</div>
+            <div class="weekday weekend-heading" role="columnheader">Sun</div>
+          </div>
+          <div class="calendar-days" id="calendar-days" role="rowgroup"></div>
+        </div>
+
+        <div class="calendar-footer">
+          <div class="legend" aria-label="Event types">
+            <span class="legend-item"><span class="legend-dot holiday-dot"></span>Holiday</span>
+            <span class="legend-item"><span class="legend-dot plan-dot"></span>Plan</span>
+            <span class="legend-item"><span class="legend-dot travel-dot"></span>Travel</span>
+            <span class="legend-item"><span class="legend-dot thaurprasad-dot"></span>Thaurprasad</span>
+            <span class="legend-item"><span class="legend-dot karnataka-dot"></span>Karnataka</span>
+          </div>
+          <p class="calendar-hint">Pick a date to start planning <span aria-hidden="true">↗</span></p>
+        </div>
+        <p class="calendar-disclaimer">Festival dates are indicative and may vary by region or moon sighting.</p>
+      </section>
+
+      <section class="add-section" id="add-event" aria-labelledby="add-title">
+        <div class="add-intro">
+          <p class="section-kicker">SOMETHING TO LOOK FORWARD TO</p>
+          <h2 id="add-title">Add a little <em>something.</em></h2>
+          <p>Save a day off, a plan, or the trip you can't stop thinking about.</p>
+        </div>
+        <form class="event-form" id="event-form">
+          <fieldset class="type-picker">
+            <legend>What are we adding?</legend>
+            <div class="type-options">
+              <label class="type-option type-option-holiday">
+                <input type="radio" name="type" value="Holiday" checked>
+                <span class="type-option-dot"></span>
+                <span>Holiday</span>
+              </label>
+              <label class="type-option type-option-plan">
+                <input type="radio" name="type" value="Plan">
+                <span class="type-option-dot"></span>
+                <span>Plan</span>
+              </label>
+              <label class="type-option type-option-travel">
+                <input type="radio" name="type" value="Travel">
+                <span class="type-option-dot"></span>
+                <span>Travel</span>
+              </label>
+              <label class="type-option type-option-thaurprasad">
+                <input type="radio" name="type" value="Thaurprasad">
+                <span class="type-option-dot"></span>
+                <span>Thaurprasad</span>
+              </label>
+              <label class="type-option type-option-karnataka">
+                <input type="radio" name="type" value="Karnataka">
+                <span class="type-option-dot"></span>
+                <span>Karnataka</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="form-fields">
+            <label class="field title-field">
+              <span>Give it a name</span>
+              <input name="title" type="text" maxlength="48" placeholder="e.g. A long weekend in Lisbon" required>
+            </label>
+            <label class="field date-field">
+              <span>When?</span>
+              <input name="date" id="event-date" type="date" required>
+            </label>
+          </div>
+          <label class="field notes-field">
+            <span>A little note <span class="optional">(optional)</span></span>
+            <input name="notes" type="text" maxlength="120" placeholder="Add a detail you'll want to remember">
+          </label>
+          <div class="form-bottom">
+            <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+            <button class="submit-button" type="submit">
+              Add to calendar
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-5-5 5 5-5 5"/></svg>
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+    <footer class="footer"><span>Make time for what matters.</span><span>Made for your days off <span aria-hidden="true">✳</span></span></footer>
+  </body>
+</html>
