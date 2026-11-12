@@ -259,6 +259,10 @@ function renderCalendar() {
   const firstDay = new Date(year, month, 1);
   const mondayOffset = (firstDay.getDay() + 6) % 7;
   const gridStart = new Date(year, month, 1 - mondayOffset);
+  const gridEnd = new Date(gridStart);
+  gridEnd.setDate(gridStart.getDate() + 41);
+  const selectedIsVisible = selectedDate >= dateKey(gridStart) && selectedDate <= dateKey(gridEnd);
+  const tabStopDate = selectedIsVisible ? selectedDate : dateKey(firstDay);
   const fragment = document.createDocumentFragment();
 
   for (let index = 0; index < 42; index += 1) {
@@ -282,7 +286,9 @@ function renderCalendar() {
     dayButton.className = "day-cell";
     dayButton.setAttribute("role", "gridcell");
     dayButton.dataset.date = key;
-    dayButton.setAttribute("aria-pressed", String(key === selectedDate));
+    dayButton.setAttribute("aria-colindex", String((index % 7) + 1));
+    dayButton.setAttribute("aria-selected", String(key === selectedDate));
+    dayButton.tabIndex = key === tabStopDate ? 0 : -1;
     if (date.getMonth() !== month) dayButton.classList.add("outside-month");
     if (key === dateKey(today)) {
       dayButton.classList.add("is-today");
@@ -351,6 +357,44 @@ calendarDays.addEventListener("click", (event) => {
   eventDateInput.value = selectedDate;
   renderCalendar();
   eventDateInput.focus();
+});
+
+calendarDays.addEventListener("keydown", (event) => {
+  const cell = event.target.closest(".day-cell");
+  if (!cell) return;
+
+  const currentDate = new Date(`${cell.dataset.date}T12:00:00`);
+  let dayOffset;
+  switch (event.key) {
+    case "ArrowLeft":
+      dayOffset = -1;
+      break;
+    case "ArrowRight":
+      dayOffset = 1;
+      break;
+    case "ArrowUp":
+      dayOffset = -7;
+      break;
+    case "ArrowDown":
+      dayOffset = 7;
+      break;
+    case "Home":
+      dayOffset = -((currentDate.getDay() + 6) % 7);
+      break;
+    case "End":
+      dayOffset = 6 - ((currentDate.getDay() + 6) % 7);
+      break;
+    default:
+      return;
+  }
+
+  event.preventDefault();
+  currentDate.setDate(currentDate.getDate() + dayOffset);
+  selectedDate = dateKey(currentDate);
+  displayedMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+  eventDateInput.value = selectedDate;
+  renderCalendar();
+  calendarDays.querySelector(`[data-date="${selectedDate}"]`).focus();
 });
 
 eventForm.addEventListener("submit", (event) => {

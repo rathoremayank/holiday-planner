@@ -9,6 +9,7 @@
     <script src="app.js" defer></script>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to calendar and event form</a>
     <header class="topbar">
       <a class="brand" href="#" aria-label="Daylight home">
         <span class="brand-mark" aria-hidden="true">
@@ -30,7 +31,7 @@
       </div>
     </header>
 
-    <main class="page">
+    <main class="page" id="main-content" tabindex="-1">
       <section class="intro" aria-labelledby="page-title">
         <div>
           <p class="eyebrow"><span class="eyebrow-dot"></span> YOUR PERSONAL TIME-OFF PLANNER</p>
@@ -50,7 +51,7 @@
             <h2 id="month-label" aria-live="polite"></h2>
             <p class="month-summary" id="month-summary"></p>
           </div>
-          <div class="calendar-controls" aria-label="Calendar navigation">
+          <div class="calendar-controls" role="group" aria-label="Calendar navigation">
             <button class="today-button" id="today-button" type="button">Today</button>
             <button class="arrow-button" id="previous-month" type="button" aria-label="Previous month">
               <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 4-6 6 6 6"/></svg>
@@ -61,28 +62,29 @@
           </div>
         </div>
 
-        <div class="calendar-grid" id="calendar-grid" role="grid" aria-labelledby="month-label">
+        <p class="sr-only" id="calendar-instructions">Use the arrow keys to move by day or week. Home and End move to the start or end of the current week. Press Enter or Space to select a date.</p>
+        <div class="calendar-grid" id="calendar-grid" role="grid" aria-labelledby="month-label" aria-describedby="calendar-instructions">
           <div class="weekday-row" role="row">
-            <div class="weekday" role="columnheader">Mon</div>
-            <div class="weekday" role="columnheader">Tue</div>
-            <div class="weekday" role="columnheader">Wed</div>
-            <div class="weekday" role="columnheader">Thu</div>
-            <div class="weekday" role="columnheader">Fri</div>
-            <div class="weekday weekend-heading" role="columnheader">Sat</div>
-            <div class="weekday weekend-heading" role="columnheader">Sun</div>
+            <div class="weekday" role="columnheader" aria-label="Monday" aria-colindex="1">Mon</div>
+            <div class="weekday" role="columnheader" aria-label="Tuesday" aria-colindex="2">Tue</div>
+            <div class="weekday" role="columnheader" aria-label="Wednesday" aria-colindex="3">Wed</div>
+            <div class="weekday" role="columnheader" aria-label="Thursday" aria-colindex="4">Thu</div>
+            <div class="weekday" role="columnheader" aria-label="Friday" aria-colindex="5">Fri</div>
+            <div class="weekday weekend-heading" role="columnheader" aria-label="Saturday" aria-colindex="6">Sat</div>
+            <div class="weekday weekend-heading" role="columnheader" aria-label="Sunday" aria-colindex="7">Sun</div>
           </div>
           <div class="calendar-days" id="calendar-days" role="rowgroup"></div>
         </div>
 
         <div class="calendar-footer">
-          <div class="legend" aria-label="Event types">
-            <span class="legend-item"><span class="legend-dot holiday-dot"></span>Holiday</span>
-            <span class="legend-item"><span class="legend-dot plan-dot"></span>Plan</span>
-            <span class="legend-item"><span class="legend-dot travel-dot"></span>Travel</span>
-            <span class="legend-item"><span class="legend-dot thaurprasad-dot"></span>Thaurprasad</span>
-            <span class="legend-item"><span class="legend-dot karnataka-dot"></span>Karnataka</span>
+          <div class="legend" role="list" aria-label="Event types">
+            <span class="legend-item" role="listitem"><span class="legend-dot holiday-dot" aria-hidden="true"></span>Holiday</span>
+            <span class="legend-item" role="listitem"><span class="legend-dot plan-dot" aria-hidden="true"></span>Plan</span>
+            <span class="legend-item" role="listitem"><span class="legend-dot travel-dot" aria-hidden="true"></span>Travel</span>
+            <span class="legend-item" role="listitem"><span class="legend-dot thaurprasad-dot" aria-hidden="true"></span>Thaurprasad</span>
+            <span class="legend-item" role="listitem"><span class="legend-dot karnataka-dot" aria-hidden="true"></span>Karnataka</span>
           </div>
-          <p class="calendar-hint">Pick a date to start planning <span aria-hidden="true">↗</span></p>
+          <p class="calendar-hint">Select a date · Use arrow keys to move <span aria-hidden="true">↗</span></p>
         </div>
         <p class="calendar-disclaimer">Festival dates are indicative and may vary by region or moon sighting.</p>
       </section>
@@ -95,7 +97,7 @@
         </div>
         <form class="event-form" id="event-form">
           <fieldset class="type-picker">
-            <legend>What are we adding?</legend>
+            <legend>Event type</legend>
             <div class="type-options">
               <label class="type-option type-option-holiday">
                 <input type="radio" name="type" value="Holiday" checked>
@@ -127,16 +129,16 @@
 
           <div class="form-fields">
             <label class="field title-field">
-              <span>Give it a name</span>
-              <input name="title" type="text" maxlength="48" placeholder="e.g. A long weekend in Lisbon" required>
+              <span>Event name</span>
+              <input name="title" type="text" maxlength="48" autocomplete="off" placeholder="e.g. A long weekend in Lisbon" required>
             </label>
             <label class="field date-field">
-              <span>When?</span>
+              <span>Date</span>
               <input name="date" id="event-date" type="date" required>
             </label>
           </div>
           <label class="field notes-field">
-            <span>A little note <span class="optional">(optional)</span></span>
+            <span>Notes <span class="optional">(optional)</span></span>
             <input name="notes" type="text" maxlength="120" placeholder="Add a detail you'll want to remember">
           </label>
           <div class="form-bottom">
